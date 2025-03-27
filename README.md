@@ -1,7 +1,10 @@
 # What's this?
 
-This is just a repository holding the Snakefile and Dockerfile to generate vidjil results from a Fastq folder.
+This is just a repository holding the Snakefile and Dockerfile to generate [vidjil](https://www.vidjil.org/) results from a Fastq folder.
 In the release section is the tar file for the docker image I built.
+
+Please visit [vidjil](https://www.vidjil.org/) website if you want to know more.
+I'm not a vidjil developer, this is just a convenience pipeline for other bioinformaticians like me.
 
 Enjoy!
 
