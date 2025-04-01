@@ -19,7 +19,7 @@ rule merge_fastq:
     output:
         f"{config['indir']}/Fastq/{{sample}}_R3_001.fastq.gz",
     shell:
-        "zcat {input} | gzip -c > {output}"
+        "cat {input} > {output}"
 
 
 rule preprocess_merge:
@@ -35,7 +35,7 @@ rule preprocess_merge:
     shell:
         """
         flash2 {input} -d {params.outdir} -o {wildcards.sample} -t {threads} --compress -M {params.total_read_size} &&
-        zcat {params.outdir}/{wildcards.sample}.extendedFrags.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_1.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_2.fastq.gz | gzip -c > {params.outdir}/{wildcards.sample}.fastq.gz &&
+        cat {params.outdir}/{wildcards.sample}.extendedFrags.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_2.fastq.gz> {params.outdir}/{wildcards.sample}.fastq.gz &&
         rm {params.outdir}/{wildcards.sample}.extendedFrags.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_1.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_2.fastq.gz
         """
 
