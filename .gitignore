@@ -1,3 +1,6 @@
 germline
 vidjil*
 flash2
+
+*.fastq
+*.fastq.gz
