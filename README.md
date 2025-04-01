@@ -26,7 +26,6 @@ git clone https://github.com:SteampunkIslande/vidjil-pipeline
 This pipleine can be launch with a docker image. 
 You need firt to build it and after that to run this iamge.
 
-```
 
 ## Build the docker image
 
@@ -36,6 +35,8 @@ make build
 ```
 
 ## Run the docker image
+
+To launch complete pipeline on all fastq.gz file available in `data/indir/Fastq/` directory, just launch following command:
 
 ```bash
 make run

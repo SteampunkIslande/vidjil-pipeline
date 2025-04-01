@@ -1,8 +1,10 @@
 build:
-	docker build . -t 'vidjil-pipeline:1.0.2'
+	docker build . -t 'vidjil-pipeline:1.0.3'
 
 run:
-	docker run vidjil-pipeline:1.0.0 --volume ./data/indir:/data/indir ./data/outdir:/data/outdir
+	docker run --volume ./data/indir:/data/indir --volume ./data/outdir:/data/outdir vidjil-pipeline:1.0.3 
+
+
 
 
 PHONY: build run 

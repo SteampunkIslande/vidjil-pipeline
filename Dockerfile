@@ -8,7 +8,7 @@ RUN mkdir -p /data/outdir
 
 RUN chown -R 1000:1000 /data/indir /data/outdir /opt
 
-RUN apt-get update && apt-get install -y  git build-essential make wget  zlib1g-dev &&\
+RUN apt-get update && apt-get install -y  git build-essential make wget  zlib1g-dev libc6 &&\
 	pip install snakemake
 
 
