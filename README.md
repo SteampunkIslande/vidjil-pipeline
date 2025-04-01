@@ -20,34 +20,57 @@ Run it from any folder on your Linux box, this will download everything into thi
 # cd to where you want this repo to be downloaded into
 
 # Clone this repo
-git clone git@github.com:SteampunkIslande/vidjil-pipeline
-
-# Build flash2
-cd vidjil-pipeline
-git clone git@github.com:dstreett/FLASH2.git
-cd FLASH2
-make
-
-# Move flash2 to this repo
-mv flash2 ..; cd ..
-
-wget 'https://www.vidjil.org/releases/vidjil-algo-latest.tar.gz' && tar -xvf vidjil-algo-latest.tar.gz
-
-# Future-proof release date ;)
-cd vidjil-algo-2024.02
-
-# Build and install vidjil-algo and germline
-make vidjil-algo germline && mv germline .. && mv vidjil-algo ..
-
-# Get preprocess germline file
-cd ../germline
-wget https://gitlab.inria.fr/vidjil/contrib/-/raw/master/preprocess/vdj_filter.g
-
+git clone https://github.com:SteampunkIslande/vidjil-pipeline
 ```
+
+This pipleine can be launch with a docker image. 
+You need firt to build it and after that to run this iamge.
+
 
 ## Build the docker image
 
 ```bash
 cd vidjil-pipeline
-docker build . -t 'vidjil-pipeline:1.0.0'
+make build
+```
+
+## Run the docker image
+
+To launch complete pipeline on all fastq.gz file available in `data/indir/Fastq/` directory, just launch following command:
+
+```bash
+make run
+```
+
+
+## Detailled step for docker build step or local use
+
+
+### Build flash2
+
+```bash
+git clone https://github.com:dstreett/FLASH2.git
+cd FLASH2
+make
+```
+
+### Build vidjil algo and
+
+```bash
+git clone https://gitlab.inria.fr/vidjil/vidjil.git &&\
+	cd vidjil &&\
+	git checkout release-2025.02 &&\
+	make algo germline &&\
+	mv germline .. && mv vidjil-algo .. && cd .. 
+```
+
+
+### Get vidjil germline data
+
+```bash
+cd vidjil
+make germline
+mv germline ..
+cd ../germline
+wget https://gitlab.inria.fr/vidjil/contrib/-/raw/master/preprocess/vdj_filter.g
 ```
