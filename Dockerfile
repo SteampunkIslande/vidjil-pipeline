@@ -8,7 +8,7 @@ RUN mkdir -p /data/outdir
 
 RUN chown -R 1000:1000 /data/indir /data/outdir /opt
 
-RUN apt-get update && apt-get install -y  git build-essential make wget  zlib1g-dev libc6 &&\
+RUN apt-get update && apt-get install -y  git build-essential make wget  zlib1g-dev libc6 pigz &&\
 	pip install snakemake
 
 
@@ -24,8 +24,9 @@ RUN git clone https://github.com/dstreett/FLASH2.git && \
 	rm -r vidjil FLASH2
 
 
-COPY vidjil-algo /usr/local/bin/vidjil-algo
-COPY flash2 /usr/local/bin/flash2
+RUN mv flash2 /usr/local/bin/flash2
+RUN mv vidjil-algo /usr/local/bin/vidjil-algo
+RUN mv /germline /opt
 
 COPY Snakefile /opt/Snakefile
 COPY config.json /opt/config.json
@@ -36,4 +37,4 @@ ENV XDG_CACHE_HOME=/data/indir
 
 WORKDIR /opt
 
-ENTRYPOINT [ "snakemake", "-c", "8" ]
+ENTRYPOINT [ "bash", "-c"]

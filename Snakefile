@@ -19,7 +19,7 @@ rule merge_fastq:
     output:
         f"{config['indir']}/Fastq/{{sample}}_R3_001.fastq.gz",
     shell:
-        "cat {input} > {output}"
+        "pigz -dc {input} | pigz -c > {output}"
 
 
 rule preprocess_merge:
@@ -35,7 +35,7 @@ rule preprocess_merge:
     shell:
         """
         flash2 {input} -d {params.outdir} -o {wildcards.sample} -t {threads} --compress -M {params.total_read_size} &&
-        cat {params.outdir}/{wildcards.sample}.extendedFrags.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_2.fastq.gz> {params.outdir}/{wildcards.sample}.fastq.gz &&
+        pigz -dc {params.outdir}/{wildcards.sample}.extendedFrags.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_2.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_1.fastq.gz | pigz -c > {params.outdir}/{wildcards.sample}.fastq.gz &&
         rm {params.outdir}/{wildcards.sample}.extendedFrags.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_1.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_2.fastq.gz
         """
 
@@ -44,7 +44,7 @@ rule preprocess_prefilter:
     input:
         "{outdir}/preprocess-flash/{sample}.fastq.gz",
     output:
-        "{outdir}/preprocess-prefilter/{sample}.detected.vdj.fa.gz",
+        "{outdir}/preprocess-prefilter/{sample}.detected.vdj.fastq.gz",
     params:
         germline_path=config.get("germline_path", "germline"),
         outdir=lambda wildcards: f"{wildcards.outdir}/preprocess-prefilter",
@@ -56,7 +56,7 @@ rule preprocess_prefilter:
 
 rule vidjil:
     input:
-        "{outdir}/preprocess-prefilter/{sample}.detected.vdj.fa.gz",
+        "{outdir}/preprocess-prefilter/{sample}.detected.vdj.fastq.gz",
     output:
         "{outdir}/vidjil-results/{sample}.vidjil",
     params:
