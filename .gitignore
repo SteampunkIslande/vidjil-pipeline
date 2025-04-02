@@ -1,6 +1,9 @@
 germline
-vidjil*
+vidjil-results/
 flash2
+
+preprocess-flash/
+preprocess-prefilter/
 
 *.fastq
 *.fastq.gz

@@ -28,6 +28,11 @@ RUN mv flash2 /usr/local/bin/flash2
 RUN mv vidjil-algo /usr/local/bin/vidjil-algo
 RUN mv /germline /opt
 
+# germline folder should be accessible to user 1000:1000
+RUN chown -R 1000:1000 /opt/germline
+
+COPY vdj_filter.g /opt/germline/vdj_filter.g
+
 COPY Snakefile /opt/Snakefile
 COPY config.json /opt/config.json
 

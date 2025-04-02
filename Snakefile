@@ -12,16 +12,6 @@ rule all:
         ),
 
 
-rule merge_fastq:
-    input:
-        f"{config['indir']}/Fastq/{{sample}}_R1_001.fastq.gz",
-        f"{config['indir']}/Fastq/{{sample}}_R2_001.fastq.gz",
-    output:
-        f"{config['indir']}/Fastq/{{sample}}_R3_001.fastq.gz",
-    shell:
-        "pigz -dc {input} | pigz -c > {output}"
-
-
 rule preprocess_merge:
     input:
         f"{config['indir']}/Fastq/{{sample}}_R1_001.fastq.gz",
@@ -35,7 +25,7 @@ rule preprocess_merge:
     shell:
         """
         flash2 {input} -d {params.outdir} -o {wildcards.sample} -t {threads} --compress -M {params.total_read_size} &&
-        pigz -dc {params.outdir}/{wildcards.sample}.extendedFrags.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_2.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_1.fastq.gz | pigz -c > {params.outdir}/{wildcards.sample}.fastq.gz &&
+        cat {params.outdir}/{wildcards.sample}.extendedFrags.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_2.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_1.fastq.gz > {params.outdir}/{wildcards.sample}.fastq.gz &&
         rm {params.outdir}/{wildcards.sample}.extendedFrags.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_1.fastq.gz {params.outdir}/{wildcards.sample}.notCombined_2.fastq.gz
         """
 
