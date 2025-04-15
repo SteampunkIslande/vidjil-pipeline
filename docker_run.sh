@@ -18,5 +18,5 @@ if [ ! -d "$OUTDIR" ]; then
     exit 1
 fi
 
-docker run -it --volume $INDIR:/data/indir --volume $OUTDIR:/data/outdir vidjil-pipeline:1.0.3 "$@"
+docker run -it --volume $INDIR:/data/indir --volume $OUTDIR:/data/outdir vidjil-pipeline:1.0.4 "$@"
 

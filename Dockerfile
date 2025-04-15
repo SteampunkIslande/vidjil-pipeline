@@ -36,10 +36,14 @@ COPY vdj_filter.g /opt/germline/vdj_filter.g
 COPY Snakefile /opt/Snakefile
 COPY config.json /opt/config.json
 
-USER 1000:1000
 
 ENV XDG_CACHE_HOME=/data/indir
 
 WORKDIR /opt
 
-ENTRYPOINT [ "bash", "-c"]
+COPY entrypoint.sh /opt/entrypoint.sh
+RUN chmod +x /opt/entrypoint.sh
+
+USER 1000:1000
+
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
