@@ -1,4 +1,6 @@
 {
     "indir": "/data/indir",
-    "outdir": "/data/outdir"
+    "outdir": "/data/outdir",
+    "result_output_template": "preprocess-prefilter/{sample}.detected.vdj.fastq.gz",
+    "result_output_template_alt": "vidjil-results/{sample}.vidjil"
 }

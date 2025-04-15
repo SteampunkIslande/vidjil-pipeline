@@ -5,7 +5,7 @@ configfile: "config.json"
 rule all:
     input:
         expand(
-            f"{config['outdir']}/vidjil-results/{{sample}}.vidjil",
+            f"{config['outdir']}/{config['result_output_template']}",
             sample=glob_wildcards(
                 f"{config['indir']}/Fastq/{{sample}}_R1_001.fastq.gz"
             ).sample,
