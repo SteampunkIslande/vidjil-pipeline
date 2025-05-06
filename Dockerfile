@@ -14,20 +14,12 @@ RUN apt-get update && apt-get install -y  git build-essential make wget  zlib1g-
 
 # Build and install FLASH2, vidjil-algo and germline data
 RUN git clone https://github.com/dstreett/FLASH2.git && \
-	cd FLASH2 && make && mv flash2 .. && cd .. &&\
-	git clone https://gitlab.inria.fr/vidjil/vidjil.git &&\
-	cd vidjil &&\
-	git checkout release-2025.02 &&\
-	make algo germline &&\
-	mv germline .. && mv vidjil-algo .. && cd .. &&\
-	cd germline && wget https://gitlab.inria.fr/vidjil/contrib/-/raw/master/preprocess/vdj_filter.g && cd .. &&\
-	rm -r vidjil FLASH2
+	cd FLASH2 && make && mv flash2 /usr/local/bin/flash2
 
+COPY vidjil-algo-2024.02 /usr/local/bin
+COPY vidjil-algo-2025.02 /usr/local/bin
 
-RUN mv flash2 /usr/local/bin/flash2
-RUN mv vidjil-algo /usr/local/bin/vidjil-algo
-RUN mv /germline /opt
-
+COPY germline /opt/germline
 # germline folder should be accessible to user 1000:1000
 RUN chown -R 1000:1000 /opt/germline
 

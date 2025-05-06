@@ -40,7 +40,7 @@ rule preprocess_prefilter:
         outdir=lambda wildcards: f"{wildcards.outdir}/preprocess-prefilter",
     shell:
         """
-        vidjil-algo -g {params.germline_path}/vdj_filter.g --filter-reads --gz --dir {params.outdir} --base {wildcards.sample} {input}
+        vidjil-algo-2025.02 -g {params.germline_path}/vdj_filter.g --filter-reads --gz --dir {params.outdir} --base {wildcards.sample} {input}
         """
 
 
@@ -52,4 +52,4 @@ rule vidjil:
     params:
         germline_path=config.get("germline_path", "germline"),
     shell:
-        "vidjil-algo -g {params.germline_path}/homo-sapiens.g --base {wildcards.sample} -o {wildcards.outdir}/vidjil-results {input}"
+        "vidjil-algo-2024.02 -g {params.germline_path}/homo-sapiens.g --base {wildcards.sample} -o {wildcards.outdir}/vidjil-results {input}"
