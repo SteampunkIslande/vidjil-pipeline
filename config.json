@@ -1,5 +1,5 @@
 {
     "indir": "/data/indir",
     "outdir": "/data/outdir",
-    "result_output_template": "vidjil-results/{sample}.vidjil"
+    "result_output_template": "vidjil-igh/{sample}.vidjil"
 }

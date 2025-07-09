@@ -53,3 +53,17 @@ rule vidjil:
         germline_path=config.get("germline_path", "germline"),
     shell:
         "vidjil-algo-2024.02 -g {params.germline_path}/homo-sapiens.g --base {wildcards.sample} -o {wildcards.outdir}/vidjil-results {input}"
+
+
+rule vidjil_igh:
+    input:
+        fq="{outdir}/preprocess-prefilter/{sample}.detected.vdj.fastq.gz",
+        vd="{outdir}/vidjil-results/{sample}.vidjil",
+    output:
+        "{outdir}/vidjil-igh/{sample}.vidjil",
+    params:
+        tmpdir=lambda wildcards: f"{wildcards.outdir}/vidjil-igh/{wildcards.sample}-tmp",
+    shell:
+        """
+        mkdir -p {params.tmpdir} && python /opt/capture_contigs.py -i {input.vd} -o {output} --clean --adaptater-length 5 -d {params.tmpdir} && rm -R {params.tmpdir}
+        """

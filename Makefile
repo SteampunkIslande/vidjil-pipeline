@@ -1,4 +1,4 @@
 build:
-	docker build . -t 'vidjil-pipeline:1.0.4'
+	docker build . -t 'vidjil-pipeline:1.0.5'
 
 PHONY: build 
